@@ -1,18 +1,22 @@
-﻿@inherits LayoutComponentBase
+﻿@using MudBlazor.Utilities
+@inherits LayoutComponentBase
 
 <MudThemeProvider Theme="@customTheme"/>
 <MudDialogProvider/>
+<MudPopoverProvider/>
 <MudSnackbarProvider/>
 
 <MudLayout>
     <MudAppBar Elevation="1" Color="Color.Primary" Dense="@true">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(_ => DrawerToggle())"/>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
+                       OnClick="@(_ => DrawerToggle())"/>
         <MudStack Row="@true" Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="2">
-            <MudLink Underline="Underline.None" Href="home" Color="Color.Inherit" Typo="Typo.h5">Blazor KeyCloak Demo</MudLink>
+            <MudLink Underline="Underline.None" Href="home" Color="Color.Inherit" Typo="Typo.h5">Blazor KeyCloak Demo
+            </MudLink>
         </MudStack>
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-        <NavMenu />
+        <NavMenu/>
     </MudDrawer>
     <MudMainContent Class="body">
         <div class="outer">
@@ -28,22 +32,22 @@
 @code {
 
     private bool _drawerOpen = true;
-    
+
     private void DrawerToggle() => _drawerOpen = !_drawerOpen;
-    
+
     private static readonly MudTheme customTheme = new()
     {
         PaletteLight = new PaletteLight
         {
-            Primary = new(55, 89, 153, 255),
-            Secondary = new(55, 129, 176, 255),
-            Tertiary = new(51, 152, 166, 255),
-            Success = new(113, 186, 58, 255),
-            Info = new(151, 179, 229, 255),
-            Warning = new(229, 210, 60, 255),
-            Error = new(229, 110, 106, 255),
-            BackgroundGray = new(134, 125, 137, 255),
-            Divider = new(134, 125, 137, 255)
+            Primary = new MudColor(55, 89, 153, 255),
+            Secondary = new MudColor(55, 129, 176, 255),
+            Tertiary = new MudColor(51, 152, 166, 255),
+            Success = new MudColor(113, 186, 58, 255),
+            Info = new MudColor(151, 179, 229, 255),
+            Warning = new MudColor(229, 210, 60, 255),
+            Error = new MudColor(229, 110, 106, 255),
+            BackgroundGray = new MudColor(134, 125, 137, 255),
+            Divider = new MudColor(134, 125, 137, 255)
         }
     };
 
