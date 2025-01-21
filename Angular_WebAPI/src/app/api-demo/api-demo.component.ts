@@ -4,13 +4,12 @@ import { HttpClient } from "@angular/common/http";
 import { finalize } from "rxjs";
 
 @Component({
-  selector: 'app-api-demo',
-  standalone: true,
-  imports: [
-    MatButton
-  ],
-  templateUrl: './api-demo.component.html',
-  styleUrl: './api-demo.component.scss'
+    selector: 'app-api-demo',
+    imports: [
+        MatButton
+    ],
+    templateUrl: './api-demo.component.html',
+    styleUrl: './api-demo.component.scss'
 })
 export class ApiDemoComponent {
   private readonly httpClient: HttpClient = inject(HttpClient);

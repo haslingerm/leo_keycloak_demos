@@ -1,20 +1,19 @@
 import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from "@angular/core";
-import { KeycloakService } from "keycloak-angular";
 import { MatButton } from "@angular/material/button";
+import Keycloak from "keycloak-js";
 import { createLeoUser, LeoUser, Role } from "../../core/util/leo-token";
 
 @Component({
-  selector: 'app-counter',
-  standalone: true,
-  imports: [
-    MatButton
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './counter.component.html',
-  styleUrl: './counter.component.scss'
+    selector: 'app-counter',
+    imports: [
+        MatButton
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './counter.component.html',
+    styleUrl: './counter.component.scss'
 })
 export class CounterComponent {
-  private readonly keycloakService: KeycloakService = inject(KeycloakService);
+  private readonly keycloak = inject(Keycloak);
   private incrementAmount: number | null = null;
   public readonly count: WritableSignal<number> = signal(0);
 
@@ -25,7 +24,7 @@ export class CounterComponent {
 
   private async getIncrementAmount(): Promise<number> {
     if (this.incrementAmount === null) {
-      const leoUser: LeoUser = await createLeoUser(this.keycloakService);
+      const leoUser: LeoUser = await createLeoUser(this.keycloak.token);
 
       if (leoUser.hasRole(Role.Student)) {
         this.incrementAmount = 2;

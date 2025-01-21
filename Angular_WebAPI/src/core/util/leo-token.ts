@@ -1,5 +1,4 @@
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import { KeycloakService } from "keycloak-angular";
 
 export class LeoUser {
   constructor(public readonly firstName: string | null,
@@ -30,16 +29,11 @@ export enum Role {
   TestUser = 3
 }
 
-export async function createLeoUser(keycloakService: KeycloakService): Promise<LeoUser> {
-  const token = await decode(keycloakService);
+export async function createLeoUser(tokenRaw: string): Promise<LeoUser> {
+  const token = jwtDecode(tokenRaw);
   const values = getValues(token);
 
   return new LeoUser(values.firstName, values.lastName, values.username, values.role);
-}
-
-async function decode(keycloakService: KeycloakService): Promise<JwtPayload> {
-  const rawToken = await keycloakService.getToken();
-  return jwtDecode(rawToken);
 }
 
 function getValues(token: JwtPayload): IValues {
@@ -55,11 +49,11 @@ function getValues(token: JwtPayload): IValues {
   trySetValue<string>("given_name", value => values.firstName = value, defaultConverter);
   trySetValue<string>("family_name", value => values.lastName = value, defaultConverter);
   trySetValue<string>("preferred_username", value => values.username = value, defaultConverter);
-  trySetValue("LDAP_ENTRY_DN", value => values.role = value, ldapToRole);
+  trySetValue("ldap_entry_dn", value => values.role = value, ldapToRole);
 
   return values;
 
-  function trySetValue<T>(propertyName: string, setter: (value: T) => void, converter: (rawValue: string) => T){
+  function trySetValue<T>(propertyName: string, setter: (value: T) => void, converter: (rawValue: string) => T) {
     try {
       if (raw[propertyName]) {
         const value: T = converter(raw[propertyName]);
