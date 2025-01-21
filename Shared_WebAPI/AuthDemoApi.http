@@ -1,6 +1,6 @@
 ### Get access token - don't forget to input your user data and the client secret!
 
-POST https://auth.htl-leonding.ac.at/realms/htl-leonding/protocol/openid-connect/token
+POST https://auth.htl-leonding.ac.at/realms/htlleonding/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
 
 client_id = htlleonding-service &
