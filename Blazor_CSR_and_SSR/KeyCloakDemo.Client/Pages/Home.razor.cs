@@ -1,10 +1,13 @@
 ﻿using LeoAuth;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using UserInfo = (string Name, string Value);
 
 namespace KeyCloakDemo.Client.Pages;
 
-public sealed partial class Home
+public sealed partial class Home(AuthenticationStateProvider authenticationStateProvider,
+                                 NavigationManager navigationManager)
 {
     protected override async Task OnInitializedAsync()
     {
@@ -12,7 +15,7 @@ public sealed partial class Home
         {
             _loading = true;
             
-            var userInformation = await AuthenticationStateProvider.GetLeoUserInformation();
+            var userInformation = await authenticationStateProvider.GetLeoUserInformation();
             userInformation.Switch(user => _user = user,
                                    _ => _noData = true);
         }
@@ -52,5 +55,5 @@ public sealed partial class Home
         return data;
     }
     
-    private void GoToLogin() => NavigationManager.NavigateTo("auth/login", forceLoad: true);
+    private void GoToLogin() => navigationManager.NavigateTo("auth/login", forceLoad: true);
 }
