@@ -37,7 +37,7 @@ public sealed partial class Home
         List<UserInfo> data = [];
         user.Username.Switch(username => data.Add(("Username", username)),
                              _ => { });
-        user.Name.Switch(fullName => data.Add((NameKey, $"{fullName.FirstName}, {fullName.LastName}")),
+        user.Name.Switch(fullName => data.Add((NameKey, fullName.Name)),
                          firstNameOnly => data.Add((NameKey, firstNameOnly.FirstName)),
                          lastNameOnly => data.Add((NameKey, lastNameOnly.LastName)),
                          _ => { });
